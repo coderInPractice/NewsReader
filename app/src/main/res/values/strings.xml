@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">News Reader</string>
+    <string name="news_icon">news_icon</string>
+    <string name="news">News</string>
+    <string name="time">Time</string>
+    <string name="more">More</string>
+</resources>
