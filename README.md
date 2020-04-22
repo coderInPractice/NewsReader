@@ -4,3 +4,4 @@ Created using RecyclerView.
 Following third party libraries are used to create this app:-
   1.Android Asynchronous Http Client by James Smith
   2.Picasso
+  3.Pretty Time
