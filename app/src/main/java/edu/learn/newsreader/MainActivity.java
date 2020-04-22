@@ -22,7 +22,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String URL = "https://newsapi.org/v2/top-headlines?country=in&apiKey=6e7723902d8a4851a894d9065525802e";
+    private final String URL = "https://newsapi.org/v2/top-headlines?country=in&apiKey='your api key'";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<NewsList> myNewsList;
