@@ -4,4 +4,6 @@
     <string name="news">News</string>
     <string name="time">Time</string>
     <string name="more">More</string>
+    <string name="image_bg_desc">image background</string>
+    <string name="news_banner">news banner</string>
 </resources>
