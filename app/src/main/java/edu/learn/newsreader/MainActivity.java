@@ -4,8 +4,12 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,20 +18,21 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import cz.msebera.android.httpclient.Header;
+import edu.learn.newsreader.Modals.Article;
+import edu.learn.newsreader.ViewModel.NewsViewModel;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String URL = "https://newsapi.org/v2/top-headlines?country=in&apiKey='your api key'";
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private List<NewsList> myNewsList;
+    private final String API_KEY = "6e7723902d8a4851a894d9065525802e";
+    private  final String COUNTRY = "in";
 
-    private androidx.swiperefreshlayout.widget.SwipeRefreshLayout swipeRefreshLayout;
+    private NewsViewModel newsViewModel;
+    private RecyclerView recyclerView;
+    private NewsAdapter adapter;
+
+
+    //private androidx.swiperefreshlayout.widget.SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -35,57 +40,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        swipeRefreshLayout = findViewById(R.id.swipeContainer);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadData();
-            }
-        });
         recyclerView = findViewById(R.id.news_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myNewsList = new ArrayList<>();
 
-        loadData();
+        adapter = new NewsAdapter(this);
+
+
+        newsViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(NewsViewModel.class);
+
+        loadNewsArticles(COUNTRY,API_KEY);
 
     }
 
-    private void loadData(){
+    private void loadNewsArticles(String country, String api_key) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
-
-        AsyncHttpClient client  = new AsyncHttpClient();
-        client.get(URL,new JsonHttpResponseHandler(){
+        newsViewModel.startApiCall(country,api_key);
+        newsViewModel.getAllNews().observe(this, new Observer<List<Article>>() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response){
-                Log.i("SUCCESS JSON",response.toString());
-                progressDialog.dismiss();
-
-                try {
-                    JSONArray jsonArray = response.getJSONArray("articles");
-
-                    for(int i = 0; i < jsonArray.length(); i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        NewsList newsList = new NewsList(jsonObject.getString("title"), jsonObject.getString("publishedAt"), jsonObject.getString("urlToImage"),jsonObject.getString("url"));
-                        myNewsList.add(newsList);
-                    }
-                    adapter = new NewsAdapter(getApplicationContext(),myNewsList);
-                    recyclerView.setAdapter(adapter);
-                    swipeRefreshLayout.setRefreshing(false); //we call setRefreshing(false) to signal refresh has finished
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response){
-
+            public void onChanged(List<Article> articles) {
+                adapter.addList(articles);
+                recyclerView.setAdapter(adapter);
             }
         });
     }
+
 
 }

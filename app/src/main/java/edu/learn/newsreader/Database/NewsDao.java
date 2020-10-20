@@ -14,8 +14,11 @@ import edu.learn.newsreader.Modals.Article;
 public interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(List<DatabaseModal> newsArticles);
+    void insert(List<Article> newsArticles);
 
     @Query("SELECT * FROM news_articles")
-    LiveData<List<DatabaseModal>> getAllNews();
+    LiveData<List<Article>> getAllNews();
+
+    @Query("DELETE FROM news_articles")
+    void deleteAllNews();
 }

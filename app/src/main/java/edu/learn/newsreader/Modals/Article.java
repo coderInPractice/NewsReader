@@ -1,19 +1,27 @@
 package edu.learn.newsreader.Modals;
 
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+@Entity(tableName = "news_articles")
 public class Article {
 
+    @Ignore
     @SerializedName("source")
     @Expose
-    private Source source;
+    private Source  source;
 
     @SerializedName("author")
     @Expose
     private String author;
 
+    @PrimaryKey
+    @NonNull
     @SerializedName("title")
     @Expose
     private String title;

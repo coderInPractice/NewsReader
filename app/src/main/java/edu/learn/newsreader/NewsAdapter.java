@@ -1,83 +1,79 @@
 package edu.learn.newsreader;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import java.util.List;
-
 import androidx.annotation.NonNull;
-import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
-    private final Context mContext;
-    private final List<NewsList> mNews;
+import com.bumptech.glide.Glide;
 
-    public NewsAdapter(Context mContext, List<NewsList> mNews) {
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.learn.newsreader.Modals.Article;
+import edu.learn.newsreader.Utils.Utils;
+
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder>{
+
+    Context mContext;
+    private List<Article> mArticleList = new ArrayList<>();
+
+    public NewsAdapter(Context mContext) {
         this.mContext = mContext;
-        this.mNews = mNews;
     }
 
     @NonNull
     @Override
-    public NewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item_list,parent,false);
-        return new ViewHolder(view);
+    public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.news_item_list,parent,false);
+        return new NewsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final NewsList newsList = mNews.get(position);
-        holder.heading.setText(newsList.getHeading());
-        holder.timeStamp.setText(newsList.getTimeStamp());
-        holder.more_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("Button clicked","worked?");
-                NewsList newsList1 = mNews.get(position);
-                String URL = newsList1.geturl();
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                CustomTabsIntent customTabsIntent = builder.build();
-                customTabsIntent.launchUrl(v.getContext(), Uri.parse(URL));
-//                Intent intent = new Intent(v.getContext(),News_Launcher.class);
-//                intent.putExtra("url",newsList1.geturl());
-//                v.getContext().startActivity(intent);
-//                Log.i("Intent","Intent Fired");
-            }
-        });
-        Picasso.get()
-                .load(newsList.getImg_url())
-                .into(holder.img_thumb);
+    public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
+        Article mArticle = mArticleList.get(position);
+
+        Glide
+                .with(mContext)
+                .load(mArticle.getUrlToImage())
+                .centerCrop()
+                .into(holder.news_img);
+
+        holder.author.setText(mArticle.getAuthor());
+        holder.title.setText(mArticle.getTitle());
+        holder.publishedAt.setText(Utils.DateFormat(mArticle.getPublishedAt()));
+        holder.time.setText(Utils.DateToTimeFormat(mArticle.getPublishedAt()));
+        //holder.source.setText(mArticle.getSource().getName());
+
     }
 
     @Override
     public int getItemCount() {
-        return mNews.size();
+        return mArticleList.size();
     }
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public  void addList(List<Article> articleList){
+        mArticleList = articleList;
+        notifyDataSetChanged();
+    }
 
-        public TextView heading;
-        public TextView timeStamp;
-        public ImageView img_thumb;
-        public Button more_btn;
+    class NewsViewHolder extends RecyclerView.ViewHolder {
+        ImageView news_img;
+        TextView author,publishedAt,title,source,time;
+            public NewsViewHolder(@NonNull View itemView) {
+                super(itemView);
+                news_img = itemView.findViewById(R.id.news_img);
+                author = itemView.findViewById(R.id.news_author);
+                publishedAt = itemView.findViewById(R.id.publishedAt);
+                title = itemView.findViewById(R.id.news_title);
+                source = itemView.findViewById(R.id.source);
+                time = itemView.findViewById(R.id.time);
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            heading = itemView.findViewById(R.id.news_title);
-            timeStamp = itemView.findViewById(R.id.published_time);
-            img_thumb = itemView.findViewById(R.id.news_img);
-            more_btn = itemView.findViewById(R.id.more_btn);
+            }
         }
-    }
 
 }

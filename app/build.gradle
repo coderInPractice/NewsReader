@@ -61,6 +61,6 @@ dependencies {
     //ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0"
 
-
-
+    //Pretty Time
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.5.Final'
 }
