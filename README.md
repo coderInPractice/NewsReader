@@ -12,4 +12,6 @@ A simple news app. It uses NEWS API. It uses MVVM architecture pattern. It has *
 ## TO-DO
 - [ ] Pagination
 
-![picture alt](https://github.com/coderInPractice/NewsReader/blob/master/screenshots/online.png "Title is optional")
+# Screenshots
+<img src="/screenshots/online.png" width="346" height="615" alt="Online"/> 
+<img src="/screenshots/offline.png" width="346" height="615" alt="Home"/>
