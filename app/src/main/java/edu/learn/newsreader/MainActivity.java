@@ -24,7 +24,7 @@ import edu.learn.newsreader.ViewModel.NewsViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String API_KEY = "6e7723902d8a4851a894d9065525802e";
+    private final String API_KEY = Constants.API_KEY;
     private  final String COUNTRY = "in";
 
     private NewsViewModel newsViewModel;
