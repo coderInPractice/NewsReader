@@ -1,5 +1,5 @@
 # News Reader
-A simple news app. It uses NEWS API. It uses MVVM architecture pattern. It has **offline** feature.
+A simple news app. It uses NEWS API. It uses **MVVM** architecture pattern. It has **offline** feature.
 
 ## Library Used
 * [Retrofit](https://square.github.io/retrofit/ "Retrofit")
