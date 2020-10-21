@@ -54,6 +54,7 @@ public class NewsRepos {
                     insertApiResponseIntoDb(mArticleList);
                 }
                 else{
+                    swipeRefreshLayout.setRefreshing(false);
                     Log.d("Repository api call: ", "onResponse is empty or unsuccessful");
                 }
             }
@@ -61,6 +62,7 @@ public class NewsRepos {
             @Override
             public void onFailure(Call<NewsStatus> call, Throwable t) {
 
+                swipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(context, "Api response is failed", Toast.LENGTH_LONG).show();
 
             }
