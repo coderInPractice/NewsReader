@@ -10,7 +10,7 @@ A simple news app. It uses NEWS API. It uses **MVVM** architecture pattern. It h
 * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata/ "LiveData")
 
 ## TO-DO
-- [ ] Pagination
+- [ ] Work Manager
 
 # Screenshots
 <img src="/screenshots/online.png" width="346" height="615" alt="Online"/> 
