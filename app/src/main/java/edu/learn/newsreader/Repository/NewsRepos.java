@@ -7,6 +7,9 @@ import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +38,18 @@ public class NewsRepos {
     private MutableLiveData<List<Article>> mutableNewsArticle = new MutableLiveData<>();
     private List<Article> mArticleList = new ArrayList<>();
 
-    public void getNewsFromApi(String country, String api_key){
+    public void getNewsFromApi(String country, String api_key, SwipeRefreshLayout swipeRefreshLayout){
+        deletePrevResponse();
         NewsInterface newsInterface = RetrofitSingleton.getApiClient().create(NewsInterface.class);
         Call<NewsStatus> call = newsInterface.getNews(country,api_key);
         call.enqueue(new Callback<NewsStatus>() {
             @Override
-            public void onResponse(Call<NewsStatus> call, Response<NewsStatus> response) {
+            public void onResponse(@NotNull Call<NewsStatus> call, @NotNull Response<NewsStatus> response) {
                 if(response.isSuccessful() || response.body().getArticle() != null){
                     mArticleList = response.body().getArticle();
                     mutableNewsArticle.postValue(mArticleList);
+
+                    swipeRefreshLayout.setRefreshing(false);
 
                     insertApiResponseIntoDb(mArticleList);
                 }
@@ -61,7 +67,14 @@ public class NewsRepos {
         });
     }
 
+    private void deletePrevResponse() {
+        NewsRoomDatabase.databaseWriteExecutor.execute(() ->{
+            db.newsDao().deleteAllNews();
+        });
+    }
+
     private void insertApiResponseIntoDb(List<Article> mArticleList) {
+        Log.d("insertApiResponseInDb: ", "called");
         NewsRoomDatabase.databaseWriteExecutor.execute(()->{
             db.newsDao().insert(mArticleList);
         });

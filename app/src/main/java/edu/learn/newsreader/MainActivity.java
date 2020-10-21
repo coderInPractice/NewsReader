@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private NewsAdapter adapter;
 
 
-    //private androidx.swiperefreshlayout.widget.SwipeRefreshLayout swipeRefreshLayout;
+   private SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -40,27 +40,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        swipeRefreshLayout = findViewById(R.id.swipe_container);
         recyclerView = findViewById(R.id.news_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new NewsAdapter(this);
 
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            newsViewModel.startApiCall(COUNTRY,API_KEY,swipeRefreshLayout);
+            loadNewsArticles();
+        });
+
 
         newsViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(NewsViewModel.class);
 
-        loadNewsArticles(COUNTRY,API_KEY);
+        loadNewsArticles();
 
     }
 
-    private void loadNewsArticles(String country, String api_key) {
-
-        newsViewModel.startApiCall(country,api_key);
-        newsViewModel.getAllNews().observe(this, new Observer<List<Article>>() {
-            @Override
-            public void onChanged(List<Article> articles) {
-                adapter.addList(articles);
-                recyclerView.setAdapter(adapter);
-            }
+    private void loadNewsArticles() {
+        newsViewModel.getAllNews().observe(this, articles -> {
+            adapter.addList(articles);
+            recyclerView.setAdapter(adapter);
         });
     }
 

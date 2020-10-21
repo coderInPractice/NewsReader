@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class NewsViewModel extends AndroidViewModel {
         newsLiveData = newsRepos.getAllNews();
     }
 
-    public void startApiCall(String country, String api_key){
-        newsRepos.getNewsFromApi(country,api_key);
+    public void startApiCall(String country, String api_key, SwipeRefreshLayout swipeRefreshLayout){
+        newsRepos.getNewsFromApi(country,api_key,swipeRefreshLayout);
     }
 
     public LiveData<List<Article>> getAllNews(){

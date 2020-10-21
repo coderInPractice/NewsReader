@@ -63,4 +63,7 @@ dependencies {
 
     //Pretty Time
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.5.Final'
+
+    //Okhttp Http Logger
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 }
