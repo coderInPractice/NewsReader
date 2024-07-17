@@ -13,7 +13,7 @@ interface NewsDao {
     fun insert(newsArticles: List<Article?>?)
 
     @get:Query("SELECT * FROM news_articles")
-    val allNews: LiveData<List<Article?>?>?
+    val allNews: LiveData<List<Article>>
 
     @Query("DELETE FROM news_articles")
     fun deleteAllNews()

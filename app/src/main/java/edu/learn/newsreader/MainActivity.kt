@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadNewsArticles() {
-        newsViewModel.allNews!!.observe(this) { articles: List<Article?>? ->
+        newsViewModel.allNews.observe(this) { articles: List<Article> ->
             adapter.addList(articles)
             recyclerView.adapter = adapter
         }

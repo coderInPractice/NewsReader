@@ -6,6 +6,6 @@ import edu.learn.newsreader.Modals.Source
 object SourceConverter {
     @TypeConverter
     fun toText(source: Source): String {
-        return source.name
+        return source.name!!
     }
 }

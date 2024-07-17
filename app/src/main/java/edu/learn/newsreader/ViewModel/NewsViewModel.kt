@@ -8,7 +8,7 @@ import edu.learn.newsreader.Modals.Article
 import edu.learn.newsreader.Repository.NewsRepos
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
-    val allNews: LiveData<List<Article?>?>?
+    val allNews: LiveData<List<Article>>
     private val newsRepos = NewsRepos(application)
 
     init {

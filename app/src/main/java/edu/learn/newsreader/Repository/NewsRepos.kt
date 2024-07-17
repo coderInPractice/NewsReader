@@ -20,7 +20,7 @@ import retrofit2.Response
 class NewsRepos(application: Application) {
     var context: Context = application.applicationContext
 
-    val allNews: LiveData<List<Article?>?>?
+    val allNews: LiveData<List<Article>>
     private val db = getInstance(application)
 
     private val mutableNewsArticle = MutableLiveData<List<Article?>?>()
