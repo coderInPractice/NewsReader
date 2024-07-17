@@ -1,12 +1,12 @@
-package edu.learn.newsreader.Database
+package edu.learn.newsreader.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import edu.learn.newsreader.Converter.SourceConverter
-import edu.learn.newsreader.Modals.Article
+import edu.learn.newsreader.converter.SourceConverter
+import edu.learn.newsreader.modals.Article
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

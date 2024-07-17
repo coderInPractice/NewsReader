@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import edu.learn.newsreader.Modals.Article
-import edu.learn.newsreader.ViewModel.NewsViewModel
+import edu.learn.newsreader.modals.Article
+import edu.learn.newsreader.viewModel.NewsViewModel
 
 
 class MainActivity : AppCompatActivity() {

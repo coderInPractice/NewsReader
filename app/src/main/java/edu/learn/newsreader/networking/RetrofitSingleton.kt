@@ -1,4 +1,4 @@
-package edu.learn.newsreader.Networking
+package edu.learn.newsreader.networking
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

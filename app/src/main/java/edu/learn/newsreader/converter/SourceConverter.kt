@@ -1,7 +1,7 @@
-package edu.learn.newsreader.Converter
+package edu.learn.newsreader.converter
 
 import androidx.room.TypeConverter
-import edu.learn.newsreader.Modals.Source
+import edu.learn.newsreader.modals.Source
 
 object SourceConverter {
     @TypeConverter

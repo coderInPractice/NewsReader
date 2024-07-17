@@ -1,4 +1,4 @@
-package edu.learn.newsreader.Modals
+package edu.learn.newsreader.modals
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

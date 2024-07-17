@@ -1,6 +1,6 @@
-package edu.learn.newsreader.Networking
+package edu.learn.newsreader.networking
 
-import edu.learn.newsreader.Modals.NewsStatus
+import edu.learn.newsreader.modals.NewsStatus
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

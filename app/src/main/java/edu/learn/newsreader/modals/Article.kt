@@ -1,4 +1,4 @@
-package edu.learn.newsreader.Modals
+package edu.learn.newsreader.modals
 
 import androidx.room.Entity
 import androidx.room.Ignore

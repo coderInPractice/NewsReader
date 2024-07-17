@@ -1,4 +1,4 @@
-package edu.learn.newsreader.Repository
+package edu.learn.newsreader.repository
 
 import android.app.Application
 import android.content.Context
@@ -7,12 +7,12 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import edu.learn.newsreader.Database.NewsRoomDatabase
-import edu.learn.newsreader.Database.NewsRoomDatabase.Companion.getInstance
-import edu.learn.newsreader.Modals.Article
-import edu.learn.newsreader.Modals.NewsStatus
-import edu.learn.newsreader.Networking.NewsInterface
-import edu.learn.newsreader.Networking.RetrofitSingleton.apiClient
+import edu.learn.newsreader.database.NewsRoomDatabase
+import edu.learn.newsreader.database.NewsRoomDatabase.Companion.getInstance
+import edu.learn.newsreader.modals.Article
+import edu.learn.newsreader.modals.NewsStatus
+import edu.learn.newsreader.networking.NewsInterface
+import edu.learn.newsreader.networking.RetrofitSingleton.apiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

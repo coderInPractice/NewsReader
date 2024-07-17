@@ -9,10 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import edu.learn.newsreader.Modals.Article
+import edu.learn.newsreader.modals.Article
 import edu.learn.newsreader.NewsAdapter.NewsViewHolder
-import edu.learn.newsreader.Utils.Utils.dateFormat
-import edu.learn.newsreader.Utils.Utils.dateToTimeFormat
+import edu.learn.newsreader.utils.Utils.dateFormat
+import edu.learn.newsreader.utils.Utils.dateToTimeFormat
 
 class NewsAdapter(private var mContext: Context) : RecyclerView.Adapter<NewsViewHolder>() {
     private var mArticleList: List<Article> = ArrayList()

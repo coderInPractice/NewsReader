@@ -1,4 +1,4 @@
-package edu.learn.newsreader.Utils
+package edu.learn.newsreader.utils
 
 import org.ocpsoft.prettytime.PrettyTime
 import java.text.DateFormat

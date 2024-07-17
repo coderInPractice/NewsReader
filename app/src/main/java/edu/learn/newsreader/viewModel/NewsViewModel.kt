@@ -1,11 +1,11 @@
-package edu.learn.newsreader.ViewModel
+package edu.learn.newsreader.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import edu.learn.newsreader.Modals.Article
-import edu.learn.newsreader.Repository.NewsRepos
+import edu.learn.newsreader.modals.Article
+import edu.learn.newsreader.repository.NewsRepos
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
     val allNews: LiveData<List<Article>>

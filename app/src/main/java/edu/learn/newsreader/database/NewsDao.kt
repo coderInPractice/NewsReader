@@ -1,11 +1,11 @@
-package edu.learn.newsreader.Database
+package edu.learn.newsreader.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import edu.learn.newsreader.Modals.Article
+import edu.learn.newsreader.modals.Article
 
 @Dao
 interface NewsDao {
