@@ -1,69 +1,57 @@
-package edu.learn.newsreader;
+package edu.learn.newsreader
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.learn.newsreader.Modals.Article;
-import edu.learn.newsreader.ViewModel.NewsViewModel;
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import edu.learn.newsreader.Modals.Article
+import edu.learn.newsreader.ViewModel.NewsViewModel
 
 
-public class MainActivity extends AppCompatActivity {
+class MainActivity : AppCompatActivity() {
 
-    private final String API_KEY = Constants.API_KEY;
-    private  final String COUNTRY = "in";
-
-    private NewsViewModel newsViewModel;
-    private RecyclerView recyclerView;
-    private NewsAdapter adapter;
-
-
-   private SwipeRefreshLayout swipeRefreshLayout;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        swipeRefreshLayout = findViewById(R.id.swipe_container);
-        recyclerView = findViewById(R.id.news_recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        adapter = new NewsAdapter(this);
-
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            newsViewModel.startApiCall(COUNTRY,API_KEY,swipeRefreshLayout);
-            loadNewsArticles();
-        });
-
-
-        newsViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(NewsViewModel.class);
-
-        loadNewsArticles();
-
+    companion object {
+        private const val API_KEY: String = "ADD_LATEST_API_KEY"
+        private const val COUNTRY = "in"
     }
 
-    private void loadNewsArticles() {
-        newsViewModel.getAllNews().observe(this, articles -> {
-            adapter.addList(articles);
-            recyclerView.setAdapter(adapter);
-        });
+    private lateinit var newsViewModel: NewsViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: NewsAdapter
+
+
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        swipeRefreshLayout = findViewById(R.id.swipe_container)
+        recyclerView = findViewById(R.id.news_recyclerView)
+        recyclerView.setLayoutManager(LinearLayoutManager(this))
+
+        adapter = NewsAdapter(this)
+
+        swipeRefreshLayout.setOnRefreshListener {
+            newsViewModel.startApiCall(COUNTRY, API_KEY, swipeRefreshLayout)
+            loadNewsArticles()
+        }
+
+
+        newsViewModel = AndroidViewModelFactory.getInstance(application).create<NewsViewModel>(
+            NewsViewModel::class.java
+        )
+
+        loadNewsArticles()
     }
 
-
+    private fun loadNewsArticles() {
+        newsViewModel.allNews!!.observe(this) { articles: List<Article?>? ->
+            adapter.addList(articles)
+            recyclerView.adapter = adapter
+        }
+    }
 }

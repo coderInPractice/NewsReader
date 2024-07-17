@@ -1,13 +1,11 @@
-package edu.learn.newsreader.Converter;
+package edu.learn.newsreader.Converter
 
-import androidx.room.TypeConverter;
+import androidx.room.TypeConverter
+import edu.learn.newsreader.Modals.Source
 
-import edu.learn.newsreader.Modals.Source;
-
-public class SourceConverter {
-
+object SourceConverter {
     @TypeConverter
-    public static String toText(Source source){
-        return source.getName();
+    fun toText(source: Source): String {
+        return source.name
     }
 }

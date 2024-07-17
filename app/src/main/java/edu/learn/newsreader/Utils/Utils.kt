@@ -1,49 +1,56 @@
-package edu.learn.newsreader.Utils;
+package edu.learn.newsreader.Utils
 
-import org.ocpsoft.prettytime.PrettyTime;
+import org.ocpsoft.prettytime.PrettyTime
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-public class Utils {
-
-    public static String DateFormat(String oldstringDate){
-        String newDate;
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", new Locale(getCountry()));
+object Utils {
+    @JvmStatic
+    fun dateFormat(oldStringDate: String?): String? {
+        var newDate: String?
+        val inputFormat: DateFormat = SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss'Z'", Locale(
+                country
+            )
+        )
         try {
-            Date date = inputFormat.parse(oldstringDate);
+            val date = inputFormat.parse(oldStringDate!!)
 
-            DateFormat outputFormat = new SimpleDateFormat("E ,dd MMM yyyy",new Locale("en","IN"));
-            newDate = outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            newDate = oldstringDate;
+            val outputFormat: DateFormat = SimpleDateFormat("E ,dd MMM yyyy",
+                Locale("en", "IN"))
+            newDate = date?.let { outputFormat.format(it) }
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            newDate = oldStringDate
         }
 
-        return newDate;
+        return newDate
     }
 
-    public static String getCountry(){
-        Locale locale = new Locale("en","IN");
-        String country = String.valueOf(locale.getCountry());
-        return country.toLowerCase();
-    }
-
-    public static String DateToTimeFormat(String oldStringDate){
-        PrettyTime p = new PrettyTime(new Locale("en","IN"));
-        String isTime = null;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss",
-                    Locale.ENGLISH);
-            Date date = sdf.parse(oldStringDate);
-            isTime = p.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
+    private val country: String
+        get() {
+            val locale = Locale("en", "IN")
+            val country = locale.country.toString()
+            return country.lowercase(Locale.getDefault())
         }
 
-        return isTime;
+    @JvmStatic
+    fun dateToTimeFormat(oldStringDate: String?): String? {
+        val p = PrettyTime(Locale("en", "IN"))
+        var isTime: String? = null
+        try {
+            val sdf = SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss",
+                Locale.ENGLISH
+            )
+            val date = oldStringDate?.let { sdf.parse(it) }
+            isTime = p.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return isTime
     }
 }

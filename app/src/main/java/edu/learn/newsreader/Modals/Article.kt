@@ -1,100 +1,45 @@
-package edu.learn.newsreader.Modals;
+package edu.learn.newsreader.Modals
+
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 @Entity(tableName = "news_articles")
-public class Article {
-
+class Article {
     @Ignore
     @SerializedName("source")
     @Expose
-    private Source  source;
+    var source: Source? = null
 
+    @JvmField
     @SerializedName("author")
     @Expose
-    private String author;
+    var author: String? = null
 
+    @JvmField
     @PrimaryKey
-    @NonNull
     @SerializedName("title")
     @Expose
-    private String title;
+    var title: String? = null
 
     @SerializedName("description")
     @Expose
-    private String description;
+    var description: String? = null
 
     @SerializedName("url")
     @Expose
-    private String url;
+    var url: String? = null
 
+    @JvmField
     @SerializedName("urlToImage")
     @Expose
-    private String urlToImage;
+    var urlToImage: String? = null
 
+    @JvmField
     @SerializedName("publishedAt")
     @Expose
-    private String publishedAt;
-
-    public Source getSource() {
-        return source;
-    }
-
-    public void setSource(Source source) {
-        this.source = source;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUrlToImage() {
-        return urlToImage;
-    }
-
-    public void setUrlToImage(String urlToImage) {
-        this.urlToImage = urlToImage;
-    }
-
-    public String getPublishedAt() {
-        return publishedAt;
-    }
-
-    public void setPublishedAt(String publishedAt) {
-        this.publishedAt = publishedAt;
-    }
+    var publishedAt: String? = null
 }

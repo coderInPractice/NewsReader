@@ -1,79 +1,59 @@
-package edu.learn.newsreader;
+package edu.learn.newsreader
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
+import edu.learn.newsreader.Modals.Article
+import edu.learn.newsreader.NewsAdapter.NewsViewHolder
+import edu.learn.newsreader.Utils.Utils.dateFormat
+import edu.learn.newsreader.Utils.Utils.dateToTimeFormat
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+class NewsAdapter(private var mContext: Context) : RecyclerView.Adapter<NewsViewHolder>() {
+    private var mArticleList: List<Article> = ArrayList()
 
-import com.bumptech.glide.Glide;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.learn.newsreader.Modals.Article;
-import edu.learn.newsreader.Utils.Utils;
-
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder>{
-
-    Context mContext;
-    private List<Article> mArticleList = new ArrayList<>();
-
-    public NewsAdapter(Context mContext) {
-        this.mContext = mContext;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+        val view = LayoutInflater.from(mContext).inflate(R.layout.news_item_list, parent, false)
+        return NewsViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.news_item_list,parent,false);
-        return new NewsViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
-        Article mArticle = mArticleList.get(position);
+    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+        val mArticle = mArticleList[position]
 
         Glide
-                .with(mContext)
-                .load(mArticle.getUrlToImage())
-                .centerCrop()
-                .into(holder.news_img);
+            .with(mContext)
+            .load(mArticle.urlToImage)
+            .centerCrop()
+            .into(holder.newsImg)
 
-        holder.author.setText(mArticle.getAuthor());
-        holder.title.setText(mArticle.getTitle());
-        holder.publishedAt.setText(Utils.DateFormat(mArticle.getPublishedAt()));
-        holder.time.setText(Utils.DateToTimeFormat(mArticle.getPublishedAt()));
+        holder.author.text = mArticle.author
+        holder.title.text = mArticle.title
+        holder.publishedAt.text = dateFormat(mArticle.publishedAt)
+        holder.time.text = dateToTimeFormat(mArticle.publishedAt)
+
         //holder.source.setText(mArticle.getSource().getName());
-
     }
 
-    @Override
-    public int getItemCount() {
-        return mArticleList.size();
-    }
-    public  void addList(List<Article> articleList){
-        mArticleList = articleList;
-        notifyDataSetChanged();
+    override fun getItemCount(): Int {
+        return mArticleList.size
     }
 
-    class NewsViewHolder extends RecyclerView.ViewHolder {
-        ImageView news_img;
-        TextView author,publishedAt,title,source,time;
-            public NewsViewHolder(@NonNull View itemView) {
-                super(itemView);
-                news_img = itemView.findViewById(R.id.news_img);
-                author = itemView.findViewById(R.id.news_author);
-                publishedAt = itemView.findViewById(R.id.publishedAt);
-                title = itemView.findViewById(R.id.news_title);
-                source = itemView.findViewById(R.id.source);
-                time = itemView.findViewById(R.id.time);
+    fun addList(articleList: List<Article>) {
+        mArticleList = articleList
+        notifyDataSetChanged()
+    }
 
-            }
-        }
-
+    inner class NewsViewHolder(itemView: View) : ViewHolder(itemView) {
+        var newsImg: ImageView = itemView.findViewById(R.id.news_img)
+        var author: TextView = itemView.findViewById(R.id.news_author)
+        var publishedAt: TextView = itemView.findViewById(R.id.publishedAt)
+        var title: TextView = itemView.findViewById(R.id.news_title)
+        var source: TextView = itemView.findViewById(R.id.source)
+        var time: TextView = itemView.findViewById(R.id.time)
+    }
 }

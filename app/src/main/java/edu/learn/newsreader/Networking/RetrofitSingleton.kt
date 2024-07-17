@@ -1,29 +1,30 @@
-package edu.learn.newsreader.Networking;
+package edu.learn.newsreader.Networking
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-public class RetrofitSingleton {
+object RetrofitSingleton {
+    const val BASE_URL: String = "https://newsapi.org/v2/"
+    var retrofit: Retrofit? = null
 
-    public static final String BASE_URL = "https://newsapi.org/v2/";
-    public static Retrofit retrofit;
 
+    private var httpLoggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(
+        HttpLoggingInterceptor.Level.BODY
+    )
+    private var okHttpClient: OkHttpClient = OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build()
 
-    static HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
-    static OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build();
-
-    public static Retrofit getApiClient(){
-
-        if (retrofit == null){
-
-            retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
+    @JvmStatic
+    val apiClient: Retrofit?
+        get() {
+            if (retrofit == null) {
+                retrofit = Retrofit.Builder().baseUrl(BASE_URL)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
+                    .build()
+            }
 
-        return retrofit;
-    }
+            return retrofit
+        }
 }
